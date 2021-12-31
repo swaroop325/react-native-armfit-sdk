@@ -62,17 +62,17 @@ class ArmfitSdkManager {
     });
   }
 
-  // export function fileDownload(): Promise<void> {
-  //   return new Promise((fulfill, reject) => {
-  //     ArmfitSdk.scan((error: any) => {
-  //       if (error) {
-  //         reject(error);
-  //       } else {
-  //         fulfill();
-  //       }
-  //     });
-  //   });
-  // }
+  connect(peripheralId: any): Promise<void | string> {
+    return new Promise((fulfill, reject) => {
+      sdkManager.connect(peripheralId, (error: any) => {
+        if (error) {
+          reject(error);
+        } else {
+          fulfill();
+        }
+      });
+    });
+  }
 
   // export function realTimeData(): Promise<void> {
   //   return new Promise((fulfill, reject) => {

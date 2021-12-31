@@ -6,6 +6,7 @@ import {
   Text,
   NativeModules,
   NativeEventEmitter,
+  Button,
 } from 'react-native';
 import ArmfitSdkManager from 'react-native-armfit-sdk';
 
@@ -54,6 +55,21 @@ export default function App() {
       <Text>ID: {JSON.stringify(result.id)}</Text>
       <Text>RSSI: {JSON.stringify(result.rssi)}</Text>
       <Text>Result: {JSON.stringify(result.name)}</Text>
+      <Button
+        onPress={() =>
+          ArmfitSdkManager.connect(result.id)
+            .then(() => {
+              // Success code
+              console.log('Connected');
+            })
+            .catch((error) => {
+              // Failure code
+              console.log(error);
+            })
+        }
+        title="Connect"
+        color="#841584"
+      />
     </View>
   );
 }
