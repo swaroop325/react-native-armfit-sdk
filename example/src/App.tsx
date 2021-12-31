@@ -16,6 +16,7 @@ const sdkManagerEmitter = new NativeEventEmitter(sdkManager);
 export default function App() {
   const [result, setResult] = React.useState<any | undefined>([]);
   const [initialised, setInitialsed] = React.useState<boolean>(false);
+  const [connected, setConnected] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     ArmfitSdkManager.startSdk().then(() => {
@@ -55,21 +56,43 @@ export default function App() {
       <Text>ID: {JSON.stringify(result.id)}</Text>
       <Text>RSSI: {JSON.stringify(result.rssi)}</Text>
       <Text>Result: {JSON.stringify(result.name)}</Text>
-      <Button
-        onPress={() =>
-          ArmfitSdkManager.connect(result.id)
-            .then(() => {
-              // Success code
-              console.log('Connected');
-            })
-            .catch((error) => {
-              // Failure code
-              console.log(error);
-            })
-        }
-        title="Connect"
-        color="#841584"
-      />
+      {!connected ? (
+        <Button
+          onPress={() =>
+            ArmfitSdkManager.connect(result.id)
+              .then(() => {
+                // Success code
+                setConnected(true);
+                console.log('Connected');
+              })
+              .catch((error) => {
+                // Failure code
+                console.log(error);
+              })
+          }
+          title="Connect"
+          color="#841584"
+        />
+      ) : (
+        <>
+          <Text>Connected</Text>
+          <Button
+            onPress={() =>
+              ArmfitSdkManager.retrieveServices(result.id)
+                .then((peripheralData) => {
+                  // Success code
+                  console.log(JSON.stringify(peripheralData));
+                })
+                .catch((error) => {
+                  // Failure code
+                  console.log(error);
+                })
+            }
+            title="Retrieve "
+            color="#811584"
+          />
+        </>
+      )}
     </View>
   );
 }

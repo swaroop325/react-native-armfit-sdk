@@ -74,6 +74,21 @@ class ArmfitSdkManager {
     });
   }
 
+  retrieveServices(peripheralId: any, services?: any): Promise<void | string> {
+    return new Promise((fulfill, reject) => {
+      sdkManager.retrieveServices(
+        peripheralId,
+        services,
+        (error: any, peripheral: any | void | PromiseLike<string | void>) => {
+          if (error) {
+            reject(error);
+          } else {
+            fulfill(peripheral);
+          }
+        }
+      );
+    });
+  }
   // export function realTimeData(): Promise<void> {
   //   return new Promise((fulfill, reject) => {
   //     ArmfitSdk.scan((error: any) => {
