@@ -21,7 +21,7 @@ def safeExtGet(prop, fallback) {
 android {
     compileSdkVersion safeExtGet('ArmfitSdk_compileSdkVersion', 29)
     defaultConfig {
-        minSdkVersion safeExtGet('ArmfitSdk_minSdkVersion', 16)
+        minSdkVersion safeExtGet('ArmfitSdk_minSdkVersion', 21)
         targetSdkVersion safeExtGet('ArmfitSdk_targetSdkVersion', 29)
         versionCode 1
         versionName "1.0"
