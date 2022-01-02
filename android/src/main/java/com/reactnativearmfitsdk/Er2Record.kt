@@ -1,6 +1,7 @@
 package com.reactnativearmfitsdk
 
 import com.reactnativearmfitsdk.utils.toUInt
+import java.util.*
 
 class Er2Record {
 
