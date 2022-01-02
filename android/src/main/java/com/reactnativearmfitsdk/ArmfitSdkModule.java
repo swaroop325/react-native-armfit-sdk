@@ -37,6 +37,7 @@ import com.facebook.react.module.annotations.ReactModule;
 import com.facebook.react.modules.core.RCTNativeAppEventEmitter;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -48,7 +49,7 @@ public class ArmfitSdkModule extends ReactContextBaseJavaModule {
     public static final String LOG_TAG = "ArmfitSdk";
 
   private static final int ENABLE_REQUEST = 539;
-
+  private Bp2BleInterface bleInterface;
   private class BondRequest {
     private String uuid;
     private String pin;
@@ -284,6 +285,13 @@ public class ArmfitSdkModule extends ReactContextBaseJavaModule {
       return;
     }
     peripheral.connect(callback, getCurrentActivity());
+  }
+
+
+  @ReactMethod
+  public void getInfo(Callback callback) {
+    // SearchActivity searchActivity = new SearchActivity();
+//    searchActivity.startDiscover();
   }
 
   @ReactMethod

@@ -89,17 +89,88 @@ class ArmfitSdkManager {
       );
     });
   }
-  // export function realTimeData(): Promise<void> {
-  //   return new Promise((fulfill, reject) => {
-  //     ArmfitSdk.scan((error: any) => {
-  //       if (error) {
-  //         reject(error);
-  //       } else {
-  //         fulfill();
-  //       }
-  //     });
-  //   });
-  // }
+
+  getInfo(): Promise<void | string> {
+    return new Promise((fulfill, reject) => {
+      sdkManager.getInfo((error: any) => {
+        if (error) {
+          reject(error);
+        } else {
+          fulfill();
+        }
+      });
+    });
+  }
+
+  read(
+    peripheralId: any,
+    serviceUUID: any,
+    characteristicUUID: any
+  ): Promise<void | string> {
+    return new Promise((fulfill, reject) => {
+      sdkManager.read(
+        peripheralId,
+        serviceUUID,
+        characteristicUUID,
+        (error: any, data: any) => {
+          if (error) {
+            reject(error);
+          } else {
+            fulfill(data);
+          }
+        }
+      );
+    });
+  }
+
+  startNotification(
+    peripheralId: any,
+    serviceUUID: any,
+    characteristicUUID: any
+  ): Promise<void | string> {
+    return new Promise((fulfill, reject) => {
+      sdkManager.startNotification(
+        peripheralId,
+        serviceUUID,
+        characteristicUUID,
+        (error: any) => {
+          if (error) {
+            reject(error);
+          } else {
+            fulfill();
+          }
+        }
+      );
+    });
+  }
+
+  write(
+    peripheralId: any,
+    serviceUUID: any,
+    characteristicUUID: any,
+    data: any,
+    maxByteSize: any
+  ): Promise<void | string> {
+    if (maxByteSize == null) {
+      maxByteSize = 20;
+    }
+    return new Promise((fulfill, reject) => {
+      sdkManager.write(
+        peripheralId,
+        serviceUUID,
+        characteristicUUID,
+        data,
+        maxByteSize,
+        (error: any) => {
+          if (error) {
+            reject(error);
+          } else {
+            fulfill();
+          }
+        }
+      );
+    });
+  }
 }
 
 export default new ArmfitSdkManager();

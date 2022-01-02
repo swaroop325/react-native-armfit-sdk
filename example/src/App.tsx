@@ -17,12 +17,13 @@ export default function App() {
   const [result, setResult] = React.useState<any | undefined>([]);
   const [initialised, setInitialsed] = React.useState<boolean>(false);
   const [connected, setConnected] = React.useState<boolean>(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [scanning, setScanning] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     ArmfitSdkManager.startSdk().then(() => {
+      console.log('ArmFit Sdk initialised');
       setInitialsed(true);
+      doScan();
     });
     sdkManagerEmitter.addListener(
       'ArmfitSdkModuleDiscoverPeripheral',
@@ -32,13 +33,21 @@ export default function App() {
       'ArmfitSdkModuleDisconnectPeripheral',
       handleDisconnectedPeripheral
     );
+    sdkManagerEmitter.removeListener('ArmfitSdkModuleStopScan', handleStopScan);
+    sdkManagerEmitter.addListener(
+      'ArmfitSdkModuleDidUpdateValueForCharacteristic',
+      notifyServices
+    );
 
     return () => {
       sdkManagerEmitter.removeListener(
         'ArmfitSdkModuleDiscoverPeripheral',
         handleDiscoverPeripheral
       );
-      sdkManagerEmitter.removeListener('BleManagerStopScan', handleStopScan);
+      sdkManagerEmitter.removeListener(
+        'ArmfitSdkModuleStopScan',
+        handleStopScan
+      );
       sdkManagerEmitter.removeListener(
         'ArmfitSdkModuleDisconnectPeripheral',
         handleDisconnectedPeripheral
@@ -48,6 +57,10 @@ export default function App() {
   }, []);
 
   React.useEffect(() => {
+    // doScan();
+  }, [initialised]);
+
+  const doScan = () => {
     setScanning(true);
     ArmfitSdkManager.scan({})
       .then((results) => {
@@ -56,10 +69,10 @@ export default function App() {
       .catch((err) => {
         console.error(err);
       });
-  }, [initialised]);
+  };
 
   const handleDiscoverPeripheral = (peripheral: any) => {
-    // console.log('Got ble peripheral', peripheral);
+    setScanning(false);
     if (!peripheral.name) {
       peripheral.name = 'NO NAME';
     } else if (peripheral.name === 'BP2 1415') {
@@ -71,6 +84,7 @@ export default function App() {
 
   const handleDisconnectedPeripheral = () => {
     console.log('Device Disconnected');
+    setConnected(false);
     setResult([]);
   };
 
@@ -79,12 +93,45 @@ export default function App() {
     setScanning(false);
   };
 
+  const notifyServices = ({
+    value,
+    peripheral,
+    characteristic,
+    service,
+  }: any) => {
+    // Convert bytes array to string
+    // const data = bytesToString(value);
+    console.log(peripheral + ' ' + service);
+    console.log(`Recieved ${value} for characteristic ${characteristic}`);
+  };
+
   return (
     <View style={styles.container}>
       {/* <Text>Result: {JSON.stringify(result)}</Text> */}
+      <Text>{scanning ? 'Scanning' : result.id ? 'Device Found' : ''}</Text>
+      {!scanning && result.id && (
+        <Button onPress={() => doScan()} title="Scan Again" color="#811584" />
+      )}
       <Text>ID: {JSON.stringify(result.id)}</Text>
       <Text>RSSI: {JSON.stringify(result.rssi)}</Text>
       <Text>Result: {JSON.stringify(result.name)}</Text>
+      {connected && (
+        <Button
+          onPress={() =>
+            ArmfitSdkManager.getInfo()
+              .then((peripheralData) => {
+                console.log('start' + JSON.stringify(peripheralData));
+              })
+              .catch((error) => {
+                // Failure code
+                console.log(error);
+              })
+          }
+          title="Get Info "
+          color="#811584"
+        />
+      )}
+      <Text>Actions</Text>
       {!connected ? (
         <Button
           onPress={() =>
@@ -104,7 +151,7 @@ export default function App() {
         />
       ) : (
         <>
-          <Text>Connected</Text>
+          <Text>Connected with ArmFit</Text>
           <Button
             onPress={() =>
               ArmfitSdkManager.retrieveServices(result.id)
@@ -122,6 +169,22 @@ export default function App() {
           />
         </>
       )}
+      <Text>Services</Text>
+      <Button
+        onPress={() =>
+          ArmfitSdkManager.read(result.id, '1800', '2a04')
+            .then((peripheralData) => {
+              // Success code
+              console.log(JSON.stringify(peripheralData));
+            })
+            .catch((error) => {
+              // Failure code
+              console.log(error);
+            })
+        }
+        title="Service Read "
+        color="#811584"
+      />
     </View>
   );
 }
