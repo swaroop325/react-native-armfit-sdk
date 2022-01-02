@@ -17,6 +17,8 @@ export default function App() {
   const [result, setResult] = React.useState<any | undefined>([]);
   const [initialised, setInitialsed] = React.useState<boolean>(false);
   const [connected, setConnected] = React.useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [scanning, setScanning] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     ArmfitSdkManager.startSdk().then(() => {
@@ -26,10 +28,27 @@ export default function App() {
       'ArmfitSdkModuleDiscoverPeripheral',
       handleDiscoverPeripheral
     );
+    sdkManagerEmitter.addListener(
+      'ArmfitSdkModuleDisconnectPeripheral',
+      handleDisconnectedPeripheral
+    );
+
+    return () => {
+      sdkManagerEmitter.removeListener(
+        'ArmfitSdkModuleDiscoverPeripheral',
+        handleDiscoverPeripheral
+      );
+      sdkManagerEmitter.removeListener('BleManagerStopScan', handleStopScan);
+      sdkManagerEmitter.removeListener(
+        'ArmfitSdkModuleDisconnectPeripheral',
+        handleDisconnectedPeripheral
+      );
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
+    setScanning(true);
     ArmfitSdkManager.scan({})
       .then((results) => {
         console.log(results);
@@ -48,6 +67,16 @@ export default function App() {
       setResult(peripheral);
       ArmfitSdkManager.stopScan();
     }
+  };
+
+  const handleDisconnectedPeripheral = () => {
+    console.log('Device Disconnected');
+    setResult([]);
+  };
+
+  const handleStopScan = () => {
+    console.log('Scan is stopped');
+    setScanning(false);
   };
 
   return (
