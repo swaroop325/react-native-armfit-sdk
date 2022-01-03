@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.facebook.react.bridge.UiThreadUtil.runOnUiThread;
+import static com.reactnativearmfitsdk.Bluetooth.getDeviceModel;
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 public class LollipopScanManager extends ScanManager {
@@ -116,7 +117,19 @@ public class LollipopScanManager extends ScanManager {
                         peripheral.updateRssi(result.getRssi());
                     }
           armfitSdkModule.savePeripheral(peripheral);
-
+          String deviceName = result.getDevice().getName();
+          int rssi = result.getRssi();
+          int model = getDeviceModel(deviceName);
+          if (model == Bluetooth.MODEL_UNRECOGNIZED) {
+            return;
+          }
+          Bluetooth b = new Bluetooth(
+            Bluetooth.MODEL_BP2,
+            deviceName,
+            result.getDevice(),
+            rssi
+          );
+          BluetoothController.addDevice(b);
 					WritableMap map = peripheral.asWritableMap();
           armfitSdkModule.sendEvent("ArmfitSdkModuleDiscoverPeripheral", map);
 				}

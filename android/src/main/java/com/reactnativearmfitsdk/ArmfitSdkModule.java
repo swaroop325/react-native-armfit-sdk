@@ -37,12 +37,15 @@ import com.facebook.react.module.annotations.ReactModule;
 import com.facebook.react.modules.core.RCTNativeAppEventEmitter;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import no.nordicsemi.android.ble.*;
 
 @ReactModule(name = ArmfitSdkModule.LOG_TAG)
 public class ArmfitSdkModule extends ReactContextBaseJavaModule {
@@ -284,14 +287,21 @@ public class ArmfitSdkModule extends ReactContextBaseJavaModule {
       callback.invoke("Invalid peripheral uuid");
       return;
     }
+    bleInterface = new Bp2BleInterface();
+    ArrayList<Bluetooth> list = BluetoothController.getDevices(Bluetooth.MODEL_BP2);
+    bleInterface.connect(context, reactContext, list.get(0).getDevice());
     peripheral.connect(callback, getCurrentActivity());
   }
 
 
   @ReactMethod
   public void getInfo(Callback callback) {
-    // SearchActivity searchActivity = new SearchActivity();
-//    searchActivity.startDiscover();
+    bleInterface.getInfo(callback);
+  }
+
+  @ReactMethod
+  public void getRealTimeData(Callback callback) {
+    bleInterface.getRtData();
   }
 
   @ReactMethod

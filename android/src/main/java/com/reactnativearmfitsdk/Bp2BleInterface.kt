@@ -4,6 +4,10 @@ import android.content.Context
 import android.os.Handler
 import android.util.Log
 import androidx.annotation.NonNull
+import com.facebook.react.bridge.Arguments
+import com.facebook.react.bridge.Callback
+import com.facebook.react.bridge.ReactApplicationContext
+import com.facebook.react.bridge.WritableMap
 import com.reactnativearmfitsdk.utils.HexString
 import com.reactnativearmfitsdk.utils.add
 import com.reactnativearmfitsdk.utils.toUInt
@@ -17,10 +21,11 @@ import kotlin.experimental.inv
 
 class Bp2BleInterface : ConnectionObserver, LepuBleManager.onNotifyListener {
 
+
   private lateinit var context: Context
 
   lateinit var manager: LepuBleManager
-
+  lateinit var armfitSdkModule: ArmfitSdkModule
   lateinit var mydevice: BluetoothDevice
 
   private var pool: ByteArray? = null
@@ -49,11 +54,15 @@ class Bp2BleInterface : ConnectionObserver, LepuBleManager.onNotifyListener {
   public var state = false
   private var connecting = false
 
-  public fun connect(context: Context, @NonNull device: BluetoothDevice) {
+  public fun connect(
+    context: Context,
+    reactContext: ReactApplicationContext,
+    @NonNull device: BluetoothDevice
+  ) {
     if (connecting || state) {
       return
     }
-
+    armfitSdkModule = ArmfitSdkModule(reactContext)
     this.context = context
     manager = LepuBleManager(context)
     mydevice = device
@@ -80,8 +89,8 @@ class Bp2BleInterface : ConnectionObserver, LepuBleManager.onNotifyListener {
   /**
    * get device info
    */
-  public fun getInfo() {
-    sendCmd(UniversalBleCmd.getInfo())
+  public fun getInfo(callback: Callback) {
+    sendCmd(UniversalBleCmd.getInfo(), callback)
   }
 
   /**
@@ -159,12 +168,18 @@ class Bp2BleInterface : ConnectionObserver, LepuBleManager.onNotifyListener {
     }
   }
 
-
   public fun sendCmd(bs: ByteArray) {
     if (!state) {
       return
     }
     manager.sendCmd(bs)
+  }
+
+  public fun sendCmd(bs: ByteArray, callback: Callback) {
+    if (!state) {
+      return
+    }
+    manager.sendCmd(bs, callback)
   }
 
 
@@ -173,6 +188,7 @@ class Bp2BleInterface : ConnectionObserver, LepuBleManager.onNotifyListener {
     when(response.cmd) {
       UniversalBleCmd.GET_INFO -> {
         val info = LepuDevice(response.content)
+        val result = info;
       }
 
       Bp2BleCmd.RT_DATA -> {
@@ -181,6 +197,9 @@ class Bp2BleInterface : ConnectionObserver, LepuBleManager.onNotifyListener {
 //                model.duration.value = rtData.param.recordTime
 //                model.lead.value = rtData.param.leadOn
         val wave = rtData.wave
+        val map = Arguments.createMap()
+        map.putString("result", rtData.toString())
+        armfitSdkModule.sendEvent("ArmfitSdkModuleResult", map)
         wave.dataBping?.apply {
 
         }
@@ -317,17 +336,26 @@ class Bp2BleInterface : ConnectionObserver, LepuBleManager.onNotifyListener {
   override fun onDeviceConnected(device: BluetoothDevice) {
     state = true
     connecting = false
+    val map = Arguments.createMap()
+    map.putString("status","connected")
+    armfitSdkModule.sendEvent("ArmfitSdkModuleDeviceState", map)
   }
 
   override fun onDeviceConnecting(device: BluetoothDevice) {
     state = false
     connecting = true
+    val map = Arguments.createMap()
+    map.putString("status", "connecting")
+    armfitSdkModule.sendEvent("ArmfitSdkModuleDeviceState", map)
   }
 
   override fun onDeviceDisconnected(device: BluetoothDevice, reason: Int) {
     state = false
     rtHandler.removeCallbacks(RtTask())
     connecting = false
+    val map = Arguments.createMap()
+    map.putString("status","disconnected")
+    armfitSdkModule.sendEvent("ArmfitSdkModuleDeviceState", map)
   }
 
   override fun onDeviceDisconnecting(device: BluetoothDevice) {
@@ -338,6 +366,9 @@ class Bp2BleInterface : ConnectionObserver, LepuBleManager.onNotifyListener {
   override fun onDeviceFailedToConnect(device: BluetoothDevice, reason: Int) {
     state = false
     connecting = false
+    val map = Arguments.createMap()
+    map.putString("status","failedToConnect")
+    armfitSdkModule.sendEvent("ArmfitSdkModuleDeviceState", map)
   }
 
   override fun onDeviceReady(device: BluetoothDevice) {

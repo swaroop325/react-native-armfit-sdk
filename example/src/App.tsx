@@ -30,8 +30,8 @@ export default function App() {
       handleDiscoverPeripheral
     );
     sdkManagerEmitter.addListener(
-      'ArmfitSdkModuleDisconnectPeripheral',
-      handleDisconnectedPeripheral
+      'ArmfitSdkModuleDeviceState',
+      handleDevicestate
     );
     sdkManagerEmitter.removeListener('ArmfitSdkModuleStopScan', handleStopScan);
     sdkManagerEmitter.addListener(
@@ -49,8 +49,8 @@ export default function App() {
         handleStopScan
       );
       sdkManagerEmitter.removeListener(
-        'ArmfitSdkModuleDisconnectPeripheral',
-        handleDisconnectedPeripheral
+        'ArmfitSdkModuleDeviceState',
+        handleDevicestate
       );
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -82,10 +82,13 @@ export default function App() {
     }
   };
 
-  const handleDisconnectedPeripheral = () => {
-    console.log('Device Disconnected');
-    setConnected(false);
-    setResult([]);
+  const handleDevicestate = (value: any) => {
+    console.log(JSON.stringify(value));
+    if (value.status === 'disconnected') {
+      setConnected(false);
+    } else if (value.status === 'connected') {
+      setConnected(true);
+    }
   };
 
   const handleStopScan = () => {
@@ -119,8 +122,8 @@ export default function App() {
         <Button
           onPress={() =>
             ArmfitSdkManager.getInfo()
-              .then((peripheralData) => {
-                console.log('start' + JSON.stringify(peripheralData));
+              .then(() => {
+                console.log('started to listen');
               })
               .catch((error) => {
                 // Failure code
@@ -169,20 +172,20 @@ export default function App() {
           />
         </>
       )}
-      <Text>Services</Text>
+      <Text>Data Fetch</Text>
       <Button
         onPress={() =>
-          ArmfitSdkManager.read(result.id, '1800', '2a04')
-            .then((peripheralData) => {
+          ArmfitSdkManager.getRealTimeData()
+            .then(() => {
               // Success code
-              console.log(JSON.stringify(peripheralData));
+              console.log('RT started');
             })
             .catch((error) => {
               // Failure code
               console.log(error);
             })
         }
-        title="Service Read "
+        title="Fetch Data"
         color="#811584"
       />
     </View>

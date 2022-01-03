@@ -9,6 +9,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.facebook.react.bridge.Callback;
+
 import java.util.*;
 
 import no.nordicsemi.android.ble.BleManager;
@@ -122,14 +124,23 @@ public class LepuBleManager extends BleManager {
   }
 
   private void getInfo() {
-    sendCmd(UniversalBleCmd.getInfo());
+    sendCmd(UniversalBleCmd.getInfo(), null);
   }
 
   private void syncTime() {
 
   }
-
   public void sendCmd(byte[] bytes) {
+
+    writeCharacteristic(write_char, bytes)
+      .split()
+      .done(device -> {
+
+//                    LogUtils.d(device.getName() + " send: " + ByteArrayKt.bytesToHex(bytes));
+      })
+      .enqueue();
+  }
+  public void sendCmd(byte[] bytes, Callback callback) {
 
     writeCharacteristic(write_char, bytes)
       .split()
