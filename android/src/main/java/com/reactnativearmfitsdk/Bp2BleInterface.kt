@@ -161,7 +161,9 @@ class Bp2BleInterface : ConnectionObserver, LepuBleManager.onNotifyListener {
     if (!file.exists()) {
       file.createNewFile()
     }
-
+    val map = Arguments.createMap()
+    map.putString("fileBytes", bytes.toString())
+    armfitSdkModule.sendEvent("ArmfitSdkModuleFile", map)
     try {
       val fileOutputStream = FileOutputStream(file)
       fileOutputStream.write(bytes)
@@ -231,6 +233,7 @@ class Bp2BleInterface : ConnectionObserver, LepuBleManager.onNotifyListener {
           map.putInt("count",allFileList.size)
           armfitSdkModule.sendEvent("ArmfitSdkModuleFileCountResult", map)
         }
+        isDownloadingAllFile = true
         proceedNextFile()
       }
 

@@ -39,6 +39,7 @@ export default function App() {
       'ArmfitSdkModuleFileCountResult',
       fileListServices
     );
+    sdkManager.addListener('ArmfitSdkModuleFile', fileReadService);
 
     return () => {
       sdkManagerEmitter.removeListener(
@@ -105,6 +106,10 @@ export default function App() {
 
   const fileListServices = (result: any) => {
     console.log('FileCount:' + JSON.stringify(result));
+  };
+
+  const fileReadService = (result: any) => {
+    console.log('FileReading:' + JSON.stringify(result));
   };
 
   return (
