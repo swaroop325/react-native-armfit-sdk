@@ -34,10 +34,7 @@ export default function App() {
       handleDevicestate
     );
     sdkManagerEmitter.removeListener('ArmfitSdkModuleStopScan', handleStopScan);
-    sdkManagerEmitter.addListener(
-      'ArmfitSdkModuleDidUpdateValueForCharacteristic',
-      notifyServices
-    );
+    sdkManagerEmitter.addListener('ArmfitSdkModuleResult', notifyServices);
 
     return () => {
       sdkManagerEmitter.removeListener(
@@ -96,16 +93,10 @@ export default function App() {
     setScanning(false);
   };
 
-  const notifyServices = ({
-    value,
-    peripheral,
-    characteristic,
-    service,
-  }: any) => {
+  const notifyServices = (result: any) => {
     // Convert bytes array to string
     // const data = bytesToString(value);
-    console.log(peripheral + ' ' + service);
-    console.log(`Recieved ${value} for characteristic ${characteristic}`);
+    console.log('results:' + result);
   };
 
   return (
@@ -173,6 +164,22 @@ export default function App() {
         </>
       )}
       <Text>Data Fetch</Text>
+      <Button
+        onPress={() =>
+          ArmfitSdkManager.getData()
+            .then(() => {
+              // Success code
+              console.log('RT started');
+            })
+            .catch((error) => {
+              // Failure code
+              console.log(error);
+            })
+        }
+        title="Fetch Data"
+        color="#811584"
+      />
+      <Text>Realtime Data Fetch</Text>
       <Button
         onPress={() =>
           ArmfitSdkManager.getRealTimeData()

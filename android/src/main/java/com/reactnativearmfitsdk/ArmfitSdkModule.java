@@ -300,8 +300,13 @@ public class ArmfitSdkModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void getRealTimeData(Callback callback) {
+  public void getData(Callback callback) {
     bleInterface.getRtData();
+  }
+
+  @ReactMethod
+  public void getRealTimeData(Callback callback) {
+    bleInterface.runRtTask();
   }
 
   @ReactMethod

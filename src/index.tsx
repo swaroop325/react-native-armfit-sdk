@@ -52,7 +52,7 @@ class ArmfitSdkManager {
       if (scanningOptions.reportDelay == null) {
         scanningOptions.reportDelay = 0;
       }
-      sdkManager.scan([], 10, true, scanningOptions, (error: any) => {
+      sdkManager.scan([], 5, true, scanningOptions, (error: any) => {
         if (error) {
           reject(error);
         } else {
@@ -93,6 +93,18 @@ class ArmfitSdkManager {
   getInfo(): Promise<void | string> {
     return new Promise((fulfill, reject) => {
       sdkManager.getInfo((error: any) => {
+        if (error) {
+          reject(error);
+        } else {
+          fulfill();
+        }
+      });
+    });
+  }
+
+  getData(): Promise<void | string> {
+    return new Promise((fulfill, reject) => {
+      sdkManager.getData((error: any) => {
         if (error) {
           reject(error);
         } else {

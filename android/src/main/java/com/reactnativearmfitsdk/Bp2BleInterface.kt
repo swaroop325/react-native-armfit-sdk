@@ -13,10 +13,13 @@ import com.reactnativearmfitsdk.utils.add
 import com.reactnativearmfitsdk.utils.toUInt
 import no.nordicsemi.android.ble.data.Data
 import no.nordicsemi.android.ble.observer.ConnectionObserver
+import org.json.JSONObject
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.experimental.inv
 
 class Bp2BleInterface : ConnectionObserver, LepuBleManager.onNotifyListener {
@@ -198,28 +201,15 @@ class Bp2BleInterface : ConnectionObserver, LepuBleManager.onNotifyListener {
 //                model.lead.value = rtData.param.leadOn
         val wave = rtData.wave
         val map = Arguments.createMap()
-        map.putString("result", rtData.toString())
+        map.putString("results", wave.waveFs?.toList().toString())
+        map.putString("deviceData",rtData.toString())
         armfitSdkModule.sendEvent("ArmfitSdkModuleResult", map)
-        wave.dataBping?.apply {
-
-        }
-        wave.dataBpResult?.apply {
-
-        }
-        wave.dataEcging?.apply {
-
-          Er1DataController.receive(wave.waveFs)
-        }
-        wave.dataEcgResult?.apply {
-
-        }
-
         Log.d("${rtData.toString()}","")
       }
 
       Bp2BleCmd.RT_PARAM -> {
         val param = Bp2Response.RtParam(response.content)
-
+        Log.d("livmealone", response.content.toString());
       }
 
       Bp2BleCmd.RT_WAVE -> {
