@@ -162,17 +162,8 @@ class Bp2BleInterface : ConnectionObserver, LepuBleManager.onNotifyListener {
       file.createNewFile()
     }
     val map = Arguments.createMap()
-    map.putString("fileBytes", bytes.toString())
+    map.putString("fileBytes", bytes?.toList().toString())
     armfitSdkModule.sendEvent("ArmfitSdkModuleFile", map)
-    try {
-      val fileOutputStream = FileOutputStream(file)
-      fileOutputStream.write(bytes)
-      fileOutputStream.close()
-    } catch (e: FileNotFoundException) {
-      e.printStackTrace()
-    } catch (e: IOException) {
-      e.printStackTrace()
-    }
   }
 
   public fun sendCmd(bs: ByteArray) {

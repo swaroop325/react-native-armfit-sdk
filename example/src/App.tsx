@@ -39,7 +39,7 @@ export default function App() {
       'ArmfitSdkModuleFileCountResult',
       fileListServices
     );
-    sdkManager.addListener('ArmfitSdkModuleFile', fileReadService);
+    sdkManagerEmitter.addListener('ArmfitSdkModuleFile', fileReadService);
 
     return () => {
       sdkManagerEmitter.removeListener(

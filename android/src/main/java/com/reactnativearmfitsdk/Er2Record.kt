@@ -25,15 +25,17 @@ class Er2Record {
     this.data = bytes
 
     recordingTime = toUInt(bytes.copyOfRange(len-20, len-16))
-    waveData = bytes.copyOfRange(10, recordingTime*125+10)
+    if(recordingTime > 0 && recordingTime < 7500) {
+      waveData = bytes.copyOfRange(10, recordingTime * 125 + 10)
 
-    val convert = DataConvert()
-    for (i in waveData!!.indices) {
-      val tmp = convert.unCompressAlgECG(waveData!![i])
-      if (tmp.toInt() != -32768) {
-        val mv = (tmp * (1.0035 * 1800) / (4096 * 178.74)).toFloat()
-        waveFloats.add(mv)
-        waveInts.add((mv*405.35).toInt())
+      val convert = DataConvert()
+      for (i in waveData!!.indices) {
+        val tmp = convert.unCompressAlgECG(waveData!![i])
+        if (tmp.toInt() != -32768) {
+          val mv = (tmp * (1.0035 * 1800) / (4096 * 178.74)).toFloat()
+          waveFloats.add(mv)
+          waveInts.add((mv * 405.35).toInt())
+        }
       }
     }
 
