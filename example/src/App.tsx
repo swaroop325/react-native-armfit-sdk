@@ -35,6 +35,10 @@ export default function App() {
     );
     sdkManagerEmitter.removeListener('ArmfitSdkModuleStopScan', handleStopScan);
     sdkManagerEmitter.addListener('ArmfitSdkModuleResult', notifyServices);
+    sdkManagerEmitter.addListener(
+      'ArmfitSdkModuleFileCountResult',
+      fileListServices
+    );
 
     return () => {
       sdkManagerEmitter.removeListener(
@@ -97,6 +101,10 @@ export default function App() {
     // Convert bytes array to string
     // const data = bytesToString(value);
     console.log('results:' + result);
+  };
+
+  const fileListServices = (result: any) => {
+    console.log('FileCount:' + JSON.stringify(result));
   };
 
   return (
@@ -192,7 +200,23 @@ export default function App() {
               console.log(error);
             })
         }
-        title="Fetch Data"
+        title="Start Stream"
+        color="#811584"
+      />
+      <Text>Get Files</Text>
+      <Button
+        onPress={() =>
+          ArmfitSdkManager.getFiles()
+            .then(() => {
+              // Success code
+              console.log('RT started');
+            })
+            .catch((error) => {
+              // Failure code
+              console.log(error);
+            })
+        }
+        title="Start File Service"
         color="#811584"
       />
     </View>

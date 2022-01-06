@@ -125,6 +125,17 @@ class ArmfitSdkManager {
       });
     });
   }
+  getFiles(): Promise<void | string> {
+    return new Promise((fulfill, reject) => {
+      sdkManager.getFiles((error: any) => {
+        if (error) {
+          reject(error);
+        } else {
+          fulfill();
+        }
+      });
+    });
+  }
 }
 
 export default new ArmfitSdkManager();

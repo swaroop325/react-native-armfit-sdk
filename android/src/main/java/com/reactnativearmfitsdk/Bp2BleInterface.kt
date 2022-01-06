@@ -56,6 +56,7 @@ class Bp2BleInterface : ConnectionObserver, LepuBleManager.onNotifyListener {
    */
   public var state = false
   private var connecting = false
+  public var sendList = false
 
   public fun connect(
     context: Context,
@@ -119,6 +120,7 @@ class Bp2BleInterface : ConnectionObserver, LepuBleManager.onNotifyListener {
    * get file list
    */
   public fun getFileList() {
+    sendList = false
     sendCmd(UniversalBleCmd.getFileList())
   }
 
@@ -223,7 +225,12 @@ class Bp2BleInterface : ConnectionObserver, LepuBleManager.onNotifyListener {
         Log.d(fileList.toString(),"")
 
         // download all files
-        isDownloadingAllFile = true
+        if(!sendList){
+          sendList = true
+          val map = Arguments.createMap()
+          map.putInt("count",allFileList.size)
+          armfitSdkModule.sendEvent("ArmfitSdkModuleFileCountResult", map)
+        }
         proceedNextFile()
       }
 
@@ -258,7 +265,6 @@ class Bp2BleInterface : ConnectionObserver, LepuBleManager.onNotifyListener {
 
         curFileName = null
         curFile = null
-
         proceedNextFile()
       }
     }

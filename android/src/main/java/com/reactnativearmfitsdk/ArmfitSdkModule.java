@@ -310,6 +310,12 @@ public class ArmfitSdkModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
+  public void getFiles(Callback callback) {
+    bleInterface.getFileList();
+  }
+
+
+  @ReactMethod
   public void disconnect(String peripheralUUID, boolean force, Callback callback) {
     Log.d(LOG_TAG, "Disconnect from: " + peripheralUUID);
 
