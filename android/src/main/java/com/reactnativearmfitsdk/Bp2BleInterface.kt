@@ -8,6 +8,7 @@ import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.Callback
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.WritableMap
+import com.lepu.lepuble.file.Er2Record
 import com.reactnativearmfitsdk.utils.HexString
 import com.reactnativearmfitsdk.utils.add
 import com.reactnativearmfitsdk.utils.toUInt
@@ -161,9 +162,49 @@ class Bp2BleInterface : ConnectionObserver, LepuBleManager.onNotifyListener {
     if (!file.exists()) {
       file.createNewFile()
     }
-    val map = Arguments.createMap()
-    map.putString("fileBytes", bytes?.toList().toString())
-    armfitSdkModule.sendEvent("ArmfitSdkModuleFile", map)
+    processFile(bytes)
+  }
+
+  private fun processFile(bytes: ByteArray?) {
+      if (bytes?.get(1)!!.toInt() == 1) {
+        val map = Arguments.createMap()
+        val systolic = toUInt(bytes.copyOfRange(11, 13))
+        val diastolic = toUInt(bytes.copyOfRange(13, 15))
+        val mean = toUInt(bytes.copyOfRange(15, 17))
+        val time = toUInt(bytes.copyOfRange(2, 6))
+        val jsonBody = JSONObject()
+        jsonBody.put("fileType", "BP")
+        jsonBody.put("diastolic", diastolic)
+        jsonBody.put("systolic", systolic)
+        jsonBody.put("mean", mean)
+        jsonBody.put("time", time)
+        jsonBody.put("pulse", bytes?.get(17)!!.toInt())
+        map.putString("fileData", jsonBody.toString())
+        armfitSdkModule.sendEvent("ArmfitSdkModuleFile", map)
+      }else{
+        val map = Arguments.createMap()
+        val hr = toUInt(bytes.copyOfRange(20, 22))
+        val diagnose = toUInt(bytes.copyOfRange(16, 20))
+        val duration = toUInt(bytes.copyOfRange(10, 14))
+        val qrs = toUInt(bytes.copyOfRange(22, 24))
+        val pvcs = toUInt(bytes.copyOfRange(24, 26))
+        val qtc = toUInt(bytes.copyOfRange(26, 28))
+        val wave = toUInt(bytes.copyOfRange(48, bytes.size))
+        val time = toUInt(bytes.copyOfRange(2, 6))
+        val jsonBody = JSONObject()
+        jsonBody.put("qrs", qrs)
+        jsonBody.put("pvcs", pvcs)
+        jsonBody.put("qtc", qtc)
+        jsonBody.put("wave",wave)
+        jsonBody.put("fileType", "BP")
+        jsonBody.put("diagnose", diagnose)
+        jsonBody.put("hr", hr)
+        jsonBody.put("duration", duration)
+        jsonBody.put("time", time)
+        jsonBody.put("pulse", bytes?.get(17)!!.toInt())
+        map.putString("fileData", jsonBody.toString())
+        armfitSdkModule.sendEvent("ArmfitSdkModuleFile", map)
+      }
   }
 
   public fun sendCmd(bs: ByteArray) {

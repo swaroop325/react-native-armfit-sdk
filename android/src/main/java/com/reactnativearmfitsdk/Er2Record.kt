@@ -1,5 +1,6 @@
-package com.reactnativearmfitsdk
+package com.lepu.lepuble.file
 
+import com.reactnativearmfitsdk.DataConvert
 import com.reactnativearmfitsdk.utils.toUInt
 import java.util.*
 
@@ -10,7 +11,6 @@ class Er2Record {
   private var recordingTime = 0
   private var waveData: ByteArray? = null
   private var waveFloats = mutableListOf<Float>()
-  // 用于向服务器上传的 int
   private var waveInts= mutableListOf<Int>()
   private var dataCrc = 0
   private var magic = 0
@@ -25,20 +25,19 @@ class Er2Record {
     this.data = bytes
 
     recordingTime = toUInt(bytes.copyOfRange(len-20, len-16))
-    if(recordingTime > 0 && recordingTime < 7500) {
-      waveData = bytes.copyOfRange(10, recordingTime * 125 + 10)
-
+    if(recordingTime  > 0 && recordingTime < 7548){
       val convert = DataConvert()
+      waveData = bytes.copyOfRange(10, recordingTime*125+10)
       for (i in waveData!!.indices) {
         val tmp = convert.unCompressAlgECG(waveData!![i])
-        if (tmp.toInt() != -32768) {
-          val mv = (tmp * (1.0035 * 1800) / (4096 * 178.74)).toFloat()
-          waveFloats.add(mv)
-          waveInts.add((mv * 405.35).toInt())
+        tmp.toInt().apply {
+          if (this == -32768)
+            return
+          waveFloats.add((this * (1.0035 * 1800) / (4096 * 178.74)).toFloat())
+          waveInts.add(this)
         }
       }
     }
-
     fileVersion = "V${bytes[0]}"
   }
 
@@ -51,14 +50,7 @@ class Er2Record {
         """.trimIndent()
   }
 
-  /**
-   * 输出保存为AI分析的txt文件内容
-   * 返回字符串，然后保存在 txt文件中
-   * version解释：
-   *      1: 不带滤波配置
-   *      2： 带滤波配置
-   */
-  public fun toAIFile(version: Int) : String {
+  public fun toAIFile(version: Int = 2) : String {
     var file = ""
     if (version == 2) {
       file += "F-0-01,"
@@ -67,9 +59,7 @@ class Er2Record {
     for (i in waveInts) {
       file += "$i,"
     }
-
     file = file.substring(0, file.length-1)
-
     return file
   }
 }

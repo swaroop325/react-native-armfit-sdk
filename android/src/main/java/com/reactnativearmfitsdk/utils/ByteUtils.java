@@ -26,11 +26,9 @@ public class ByteUtils {
         if (ori == null) {
             return add;
         }
-
         byte[] n = new byte[ori.length + add.length];
         System.arraycopy(ori, 0, n, 0, ori.length);
         System.arraycopy(add, 0, n, ori.length, add.length);
-
         return n;
     }
 }

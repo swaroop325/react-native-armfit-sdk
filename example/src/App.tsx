@@ -33,7 +33,7 @@ export default function App() {
       'ArmfitSdkModuleDeviceState',
       handleDevicestate
     );
-    sdkManagerEmitter.removeListener('ArmfitSdkModuleStopScan', handleStopScan);
+    sdkManagerEmitter.addListener('ArmfitSdkModuleStopScan', handleStopScan);
     sdkManagerEmitter.addListener('ArmfitSdkModuleResult', notifyServices);
     sdkManagerEmitter.addListener(
       'ArmfitSdkModuleFileCountResult',
@@ -47,13 +47,19 @@ export default function App() {
         handleDiscoverPeripheral
       );
       sdkManagerEmitter.removeListener(
-        'ArmfitSdkModuleStopScan',
-        handleStopScan
-      );
-      sdkManagerEmitter.removeListener(
         'ArmfitSdkModuleDeviceState',
         handleDevicestate
       );
+      sdkManagerEmitter.removeListener(
+        'ArmfitSdkModuleStopScan',
+        handleStopScan
+      );
+      sdkManagerEmitter.removeListener('ArmfitSdkModuleResult', notifyServices);
+      sdkManagerEmitter.removeListener(
+        'ArmfitSdkModuleFileCountResult',
+        fileListServices
+      );
+      sdkManagerEmitter.removeListener('ArmfitSdkModuleFile', fileReadService);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -101,7 +107,7 @@ export default function App() {
   const notifyServices = (result: any) => {
     // Convert bytes array to string
     // const data = bytesToString(value);
-    console.log('results:' + result);
+    console.log('LiveData:' + JSON.stringify(result));
   };
 
   const fileListServices = (result: any) => {
