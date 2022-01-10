@@ -1,7 +1,7 @@
 {
   "name": "react-native-armfit-sdk",
-  "version": "0.1.0",
-  "description": "connect and retrieve data from BLE devices",
+  "version": "1.0.0",
+  "description": "Connect and retrieve data from Viatom BLE devices",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/index.d.ts",
