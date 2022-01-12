@@ -1,13 +1,15 @@
 import { NativeModules } from 'react-native';
-var sdkManager = NativeModules.ArmfitSdk;
+
 class ArmfitSdkManager {
+  private readonly sdkManager = NativeModules.ArmfitSdk;
+
   constructor() {
     // this.isPeripheralConnected = this.isPeripheralConnected.bind(this);
   }
 
   startSdk(): Promise<void | string> {
     return new Promise((fulfill, reject) => {
-      sdkManager.start((error: any) => {
+      this.sdkManager.start((error: Error | null) => {
         if (error) {
           reject(error);
         } else {
@@ -19,7 +21,7 @@ class ArmfitSdkManager {
 
   stopScan(): Promise<void | string> {
     return new Promise((fulfill, reject) => {
-      sdkManager.stopScan((error: any) => {
+      this.sdkManager.stopScan((error: Error | null) => {
         if (error != null) {
           reject(error);
         } else {
@@ -52,19 +54,25 @@ class ArmfitSdkManager {
       if (scanningOptions.reportDelay == null) {
         scanningOptions.reportDelay = 0;
       }
-      sdkManager.scan([], 5, true, scanningOptions, (error: any) => {
-        if (error) {
-          reject(error);
-        } else {
-          fulfill();
+      this.sdkManager.scan(
+        [],
+        5,
+        true,
+        scanningOptions,
+        (error: Error | null) => {
+          if (error) {
+            reject(error);
+          } else {
+            fulfill();
+          }
         }
-      });
+      );
     });
   }
 
   connect(peripheralId: any): Promise<void | string> {
     return new Promise((fulfill, reject) => {
-      sdkManager.connect(peripheralId, (error: any) => {
+      this.sdkManager.connect(peripheralId, (error: Error | null) => {
         if (error) {
           reject(error);
         } else {
@@ -76,10 +84,13 @@ class ArmfitSdkManager {
 
   retrieveServices(peripheralId: any, services?: any): Promise<void | string> {
     return new Promise((fulfill, reject) => {
-      sdkManager.retrieveServices(
+      this.sdkManager.retrieveServices(
         peripheralId,
         services,
-        (error: any, peripheral: any | void | PromiseLike<string | void>) => {
+        (
+          error: Error | null,
+          peripheral: any | void | PromiseLike<string | void>
+        ) => {
           if (error) {
             reject(error);
           } else {
@@ -92,7 +103,7 @@ class ArmfitSdkManager {
 
   getInfo(): Promise<void | string> {
     return new Promise((fulfill, reject) => {
-      sdkManager.getInfo((error: any) => {
+      this.sdkManager.getInfo((error: Error | null) => {
         if (error) {
           reject(error);
         } else {
@@ -104,7 +115,7 @@ class ArmfitSdkManager {
 
   getData(): Promise<void | string> {
     return new Promise((fulfill, reject) => {
-      sdkManager.getData((error: any) => {
+      this.sdkManager.getData((error: Error | null) => {
         if (error) {
           reject(error);
         } else {
@@ -116,7 +127,7 @@ class ArmfitSdkManager {
 
   getRealTimeData(): Promise<void | string> {
     return new Promise((fulfill, reject) => {
-      sdkManager.getRealTimeData((error: any) => {
+      this.sdkManager.getRealTimeData((error: Error | null) => {
         if (error) {
           reject(error);
         } else {
@@ -127,7 +138,7 @@ class ArmfitSdkManager {
   }
   getFiles(): Promise<void | string> {
     return new Promise((fulfill, reject) => {
-      sdkManager.getFiles((error: any) => {
+      this.sdkManager.getFiles((error: Error | null) => {
         if (error) {
           reject(error);
         } else {
