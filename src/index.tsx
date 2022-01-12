@@ -1,4 +1,5 @@
 import { NativeModules } from 'react-native';
+import type { ScanningOptions } from './types';
 
 class ArmfitSdkManager {
   private readonly sdkManager = NativeModules.ArmfitSdk;
@@ -31,29 +32,9 @@ class ArmfitSdkManager {
     });
   }
 
-  // Scaning code to connect to BLE
-  scan(scanningOptions: any): Promise<void | string> {
+  // Scanning code to connect to BLE
+  scan(scanningOptions: ScanningOptions): Promise<void | string> {
     return new Promise((fulfill, reject) => {
-      if (scanningOptions == null) {
-        scanningOptions = {};
-      }
-      if (scanningOptions.numberOfMatches == null) {
-        scanningOptions.numberOfMatches = 3;
-      }
-
-      // (ANDROID) Defaults to MATCH_MODE_AGGRESSIVE
-      if (scanningOptions.matchMode == null) {
-        scanningOptions.matchMode = 1;
-      }
-
-      // (ANDROID) Defaults to SCAN_MODE_LOW_POWER on android
-      if (scanningOptions.scanMode == null) {
-        scanningOptions.scanMode = 0;
-      }
-
-      if (scanningOptions.reportDelay == null) {
-        scanningOptions.reportDelay = 0;
-      }
       this.sdkManager.scan(
         [],
         5,
