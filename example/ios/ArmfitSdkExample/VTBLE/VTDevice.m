@@ -7,21 +7,7 @@
 //
 
 #import "VTDevice.h"
-//#import <VTMProductLib/VTMProductLib.h>
-#import "VTBLEUtils.h"
-#import "VTMProductURATUtils.h"
-//ECG
-#define ER1_ShowPre @"ER1 " //ER1
-#define VisualBeat_ShowPre @"VisualBeat " //VisualBeat
-#define ER2_ShowPre @"ER2 " //ER2
-#define DuoEK_ShowPre @"DuoEK " //DuoEK
 
-//BP
-#define BP2_ShowPre @"BP2" //BP2
-#define BP2A_ShowPre @"BP2A" //BP2A
-
-//Scale
-#define LeS1_ShowPre @"le S1-" //le S1
 @implementation VTDevice
 
 - (instancetype)initWithPeripheral:(CBPeripheral *)peripheral adv:(NSDictionary *)advDic RSSI:(NSNumber *)RSSI{
@@ -36,7 +22,7 @@
             [peripheral setValue:self.advName forKey:@"name"];
         }
         self.rawPeripheral = peripheral;
-        NSLog(@"scan device:%@",peripheral.name);
+        DLog(@"scan device:%@",peripheral.name);
         if (![peripheral.name hasPrefix:ER1_ShowPre] &&
             ![peripheral.name hasPrefix:VisualBeat_ShowPre] &&
             ![peripheral.name hasPrefix:ER2_ShowPre] &&

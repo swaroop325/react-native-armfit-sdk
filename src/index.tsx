@@ -30,7 +30,7 @@ class ArmfitSdkManager {
   }
 
   // Scaning code to connect to BLE
-  scan(scanningOptions: any): Promise<void | string> {
+  scan(scanningOptions: any, os: any): Promise<void | string> {
     return new Promise((fulfill, reject) => {
       if (scanningOptions == null) {
         scanningOptions = {};
@@ -52,13 +52,23 @@ class ArmfitSdkManager {
       if (scanningOptions.reportDelay == null) {
         scanningOptions.reportDelay = 0;
       }
-      sdkManager.scan([], 5, true, scanningOptions, (error: any) => {
-        if (error) {
-          reject(error);
-        } else {
-          fulfill();
-        }
-      });
+      if (os == 'android') {
+        sdkManager.scan([], 5, true, scanningOptions, (error: any) => {
+          if (error) {
+            reject(error);
+          } else {
+            fulfill();
+          }
+        });
+      } else {
+        sdkManager.scan([], 5, true, (error: any) => {
+          if (error) {
+            reject(error);
+          } else {
+            fulfill();
+          }
+        });
+      }
     });
   }
 

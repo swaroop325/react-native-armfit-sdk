@@ -8,10 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreBluetooth/CoreBluetooth.h>
-//#import <VTMProductLib/VTMBLEEnum.h>
-//#import <VTMProductLib/VTMBLEStruct.h>
-#import "VTMBLEEnum.h"
-#import "VTMBLEStruct.h"
+#import <VTMProductLib/VTMBLEEnum.h>
+#import <VTMProductLib/VTMBLEStruct.h>
 
 @class VTMURATUtils;
 @protocol VTMURATDeviceDelegate <NSObject>

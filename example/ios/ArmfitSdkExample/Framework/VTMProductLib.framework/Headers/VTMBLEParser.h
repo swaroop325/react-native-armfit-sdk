@@ -6,8 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-//#import <VTMProductLib/VTMBLEStruct.h>
-#import "VTMBLEStruct.h"
+#import <VTMProductLib/VTMBLEStruct.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
