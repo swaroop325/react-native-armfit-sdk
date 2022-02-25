@@ -78,10 +78,8 @@ static VTBLEUtils *_utils = nil;
 
 - (void)connectToDevice:(VTDevice *)device{
     if (device) {
-        NSLog(@"connectToDevice");
         _device = device;
         _selectedPeripheral = device.rawPeripheral;
-        NSLog(@"selectedPeripheral >> %@", _selectedPeripheral);
         [_centralManager connectPeripheral:_selectedPeripheral options:@{CBConnectPeripheralOptionNotifyOnDisconnectionKey: [NSNumber numberWithBool:YES]}];
 //        [self performSelector:@selector(timeOut) withObject:self afterDelay:5.0f];
     }
@@ -129,7 +127,7 @@ static VTBLEUtils *_utils = nil;
         [_delegate didDisconnectedDevice:_device andError:error];
     }
     if (error) {
-        DLog(@"failed to connect : %@, (%@)", peripheral, error.localizedDescription);
+        NSLog(@"failed to connect : %@, (%@)", peripheral, error.localizedDescription);
         if (_isAutoReconnect) {
             [self connectToDevice:_device];
         }
@@ -140,7 +138,7 @@ static VTBLEUtils *_utils = nil;
 }
 
 - (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error{
-    DLog(@"failed to connect : %@, (%@)", peripheral, error.localizedDescription);
+    NSLog(@"failed to connect : %@, (%@)", peripheral, error.localizedDescription);
 }
 
 

@@ -127,7 +127,7 @@ static VTBLEUtils *_utils = nil;
         [_delegate didDisconnectedDevice:_device andError:error];
     }
     if (error) {
-        DLog(@"failed to connect : %@, (%@)", peripheral, error.localizedDescription);
+        NSLog(@"failed to connect : %@, (%@)", peripheral, error.localizedDescription);
         if (_isAutoReconnect) {
             [self connectToDevice:_device];
         }
@@ -138,7 +138,7 @@ static VTBLEUtils *_utils = nil;
 }
 
 - (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error{
-    DLog(@"failed to connect : %@, (%@)", peripheral, error.localizedDescription);
+    NSLog(@"failed to connect : %@, (%@)", peripheral, error.localizedDescription);
 }
 
 

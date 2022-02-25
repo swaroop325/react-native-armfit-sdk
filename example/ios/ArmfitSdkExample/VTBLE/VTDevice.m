@@ -22,7 +22,7 @@
             [peripheral setValue:self.advName forKey:@"name"];
         }
         self.rawPeripheral = peripheral;
-        DLog(@"scan device:%@",peripheral.name);
+        NSLog(@"scan device:%@",peripheral.name);
         if (![peripheral.name hasPrefix:ER1_ShowPre] &&
             ![peripheral.name hasPrefix:VisualBeat_ShowPre] &&
             ![peripheral.name hasPrefix:ER2_ShowPre] &&

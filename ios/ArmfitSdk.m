@@ -101,7 +101,7 @@ bool hasListeners;
         [[VTBLEUtils sharedInstance] cancelConnect];
     }
     if (state == VTBLEStateUnknown) {
-        [[VTBLEUtils sharedInstance] startScan];
+        [[VTBLEUtils sharedInstance] cancelConnect];
     }
     
 }
@@ -183,7 +183,9 @@ bool hasListeners;
                 if (measuringData.is_deflating_2) {
                     for (int i = 0; i < waveform.wav.sampling_num ; i++) {
                         short prWave = waveform.wav.wave_data[i];
+                        NSLog(@"prWave >> %hd", prWave);
                     }
+                    NSLog(@"measuringData.is_deflating_2 >> %hhu", measuringData.is_deflating_2);
                 }
                 if (hasListeners){
                     [self sendEventWithName:@"ArmfitSdkModuleResult" body:[NSNumber numberWithInt:measuringData.pressure]];
