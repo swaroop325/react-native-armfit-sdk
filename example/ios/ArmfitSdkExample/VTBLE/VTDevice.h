@@ -1,11 +1,3 @@
-//
-//  VTDevice.h
-//  VTMProductSDK
-//
-//  Created by viatom on 2020/6/23.
-//  Copyright © 2020 viatom. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 

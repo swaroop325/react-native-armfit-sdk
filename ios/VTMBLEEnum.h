@@ -1,10 +1,3 @@
-//
-//  VTMBLEEnum.h
-//  VTMProductDemo
-//
-//  Created by viatom on 2020/10/26.
-//
-
 #ifndef VTMBLEEnum_h
 #define VTMBLEEnum_h
 
@@ -24,32 +17,32 @@ typedef enum : u_char {
     VTMBLEPkgTypeFormatError = 0xFC,
     VTMBLEPkgTypeFormatUnsupport = 0xFD,
     VTMBLEPkgTypeCommonError = 0xFF,
-    VTMBLEPkgTypeHeadError = 0xCC, // 自定
-    VTMBLEPkgTypeCRCError = 0xCD, // 自定
+    VTMBLEPkgTypeHeadError = 0xCC,
+    VTMBLEPkgTypeCRCError = 0xCD,
 } VTMBLEPkgType;
 
 typedef enum : u_char {
-    VTMBLECmdEcho = 0xE0, // 回显
-    VTMBLECmdGetDeviceInfo = 0xE1, // 获取设备信息
-    VTMBLECmdReset = 0xE2,   // 复位
-    VTMBLECmdRestore = 0xE3,  // 恢复出厂
-    VTMBLECmdGetBattery = 0xE4,  // 获取电池状态
-    VTMBLECmdUpdateFirmware = 0xE5, // 开始固件升升级
-    VTMBLECmdUpdateFirmwareData = 0xE6, // 发送固件升级数据
-    VTMBLECmdUpdateFirmwareEnd = 0xE7, // 固件升级结束
-    VTMBLECmdUpdateLangua = 0xE8, // 开始升级语言包
-    VTMBLECmdUpdateLanguaData = 0xF8,  // 发送语言包数据
-    VTMBLECmdUpdateLanguaEnd = 0xE9, // 结束升级语言包
-    VTMBLECmdRestoreInfo = 0xEA,  // 烧录出厂信息
-    VTMBLECmdEncrypt = 0xEB, // 加密Flash
-    VTMBLECmdSyncTime = 0xEC, // 同步时间
-    VTMBLECmdGetDeviceTemp = 0xED, // 获取设备温度
-    VTMBLECmdProductReset = 0xEE, // 恢复生产出厂设置
-    VTMBLECmdGetFileList = 0xF1,  //读取文件列表
-    VTMBLECmdStartRead = 0xF2,  // 读文件开始
-    VTMBLECmdReadFile = 0xF3, // 读文件
-    VTMBLECmdEndRead = 0xF4, // 读文件结束
-    VTMBLECmdStartWrite = 0xF5,  //
+    VTMBLECmdEcho = 0xE0,
+    VTMBLECmdGetDeviceInfo = 0xE1,
+    VTMBLECmdReset = 0xE2,
+    VTMBLECmdRestore = 0xE3,
+    VTMBLECmdGetBattery = 0xE4,
+    VTMBLECmdUpdateFirmware = 0xE5,
+    VTMBLECmdUpdateFirmwareData = 0xE6,
+    VTMBLECmdUpdateFirmwareEnd = 0xE7,
+    VTMBLECmdUpdateLangua = 0xE8,
+    VTMBLECmdUpdateLanguaData = 0xF8,
+    VTMBLECmdUpdateLanguaEnd = 0xE9,
+    VTMBLECmdRestoreInfo = 0xEA,
+    VTMBLECmdEncrypt = 0xEB,
+    VTMBLECmdSyncTime = 0xEC,
+    VTMBLECmdGetDeviceTemp = 0xED,
+    VTMBLECmdProductReset = 0xEE,
+    VTMBLECmdGetFileList = 0xF1,
+    VTMBLECmdStartRead = 0xF2,
+    VTMBLECmdReadFile = 0xF3,
+    VTMBLECmdEndRead = 0xF4,
+    VTMBLECmdStartWrite = 0xF5,
     VTMBLECmdWriteData = 0xF6,
     VTMBLECmdEndWrite = 0xF7,
     VTMBLECmdDeleteFile = 0xF8,
@@ -59,10 +52,10 @@ typedef enum : u_char {
 
 typedef enum : u_char {
     VTMECGCmdGetConfig = 0x00,
-    VTMECGCmdGetRealWave = 0x01, //获取实时波形
-    VTMECGCmdGetRunStatus = 0x02, // 获取运行状态
-    VTMECGCmdGetRealData = 0x03, // 获取实时数据
-    VTMECGCmdSetConfig = 0x04, // 设置参数
+    VTMECGCmdGetRealWave = 0x01,
+    VTMECGCmdGetRunStatus = 0x02,
+    VTMECGCmdGetRealData = 0x03,
+    VTMECGCmdSetConfig = 0x04,
 } VTMECGCmd;
 
 typedef enum : u_char {
@@ -87,10 +80,10 @@ typedef enum : u_char {
 
 typedef enum : NSUInteger {
     VTMDeviceTypeUnknown,
-    VTMDeviceTypeECG,  // ER1/ER2/VBeat/DuoEK
-    VTMDeviceTypeBP,  // BP2/BP2A
-    VTMDeviceTypeScale, // S1
+    VTMDeviceTypeECG,
+    VTMDeviceTypeBP,
+    VTMDeviceTypeScale,
 } VTMDeviceType;
 
 
-#endif /* VTMBLEEnum_h */
+#endif 

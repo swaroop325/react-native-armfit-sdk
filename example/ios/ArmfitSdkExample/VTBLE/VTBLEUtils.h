@@ -1,11 +1,3 @@
-//
-//  VTBLEUtils.h
-//  VTMProductSDK
-//
-//  Created by viatom on 2020/6/23.
-//  Copyright © 2020 viatom. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 #import "VTDevice.h"
 
@@ -35,7 +27,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)didConnectedDevice:(VTDevice *)device;
 
-/// @brief This device has been disconnected. Note: If error == nil ，user manually disconnect.
 - (void)didDisconnectedDevice:(VTDevice *)device andError:(NSError *)error;
 
 @end
@@ -45,7 +36,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) VTDevice *device;
 
-/// @brief Whether to enable the automatic reconnection function.   default YES.
 @property (nonatomic, assign) BOOL isAutoReconnect;
 
 @property (nonatomic, assign) id <VTBLEUtilsDelegate> delegate; 

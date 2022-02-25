@@ -1,23 +1,14 @@
-//
-//  VTMBLEParser.h
-//  VTMProductDemo
-//
-//  Created by viatom on 2020/10/29.
-//
-
 #import <Foundation/Foundation.h>
 #import <VTMProductLib/VTMBLEStruct.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// @brief support for all viatom devices.
 @interface VTMBLEParser : NSObject
 
 + (VTMDeviceInfo)parseDeviceInfo:(NSData *)data;
 
 + (VTMBatteryInfo)parseBatteryInfo:(NSData *)data;
 
-//+ (VTMTemperature)parseTemperature:(NSData *)data;
 
 + (VTMFileList)parseFileList:(NSData *)data;
 
@@ -25,7 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (VTMFileData)parseFileData:(NSData *)data;
 
-//+ (VTMUserList)parseUserList:(NSData *)data;
 
 
 @end
@@ -112,17 +102,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (VTMRealTimeWF)parseScaleRealTimeWaveform:(NSData *)data;
 
-/// @brief Parse params that Scale S1 running.
-/// @param data `getScaleRunParams` response
 + (VTMScaleRunParams)parseScaleRunParams:(NSData *)data;
 
-/// @brief Parse real-time data that from Scale S1.
-/// @param data `getScaleRealTimeData` response
 + (VTMScaleRealData)parseScaleRealData:(NSData *)data;
 
-/// @brief Parse file downloaded from Scale S1
-/// @param data scale.dat
-/// @param completion callback result
 + (void)parseScaleFile:(NSData *)data completion:(void(^)(VTMScaleFileHead head, VTMScaleFileData fileData))completion;
 
 @end

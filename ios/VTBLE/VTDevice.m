@@ -1,13 +1,4 @@
-//
-//  VTDevice.m
-//  VTMProductSDK
-//
-//  Created by viatom on 2020/6/23.
-//  Copyright © 2020 viatom. All rights reserved.
-//
-
 #import "VTDevice.h"
-//#import <VTMProductLib/VTMProductLib.h>
 #import "VTBLEUtils.h"
 #import "VTMProductURATUtils.h"
 //ECG

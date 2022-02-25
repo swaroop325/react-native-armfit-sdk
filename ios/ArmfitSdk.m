@@ -159,7 +159,7 @@ bool hasListeners;
     }else if(cmdType == VTMBPCmdGetRealData){
         VTMBPRealTimeData bpData = [VTMBLEParser parseBPRealTimeData:response];
         VTMBatteryInfo info = bpData.run_status.battery;
-//        NSLog(@"state:%hhu,percent:%hhu,voltage:%hu",info.state,info.percent,info.voltage);
+        //        NSLog(@"state:%hhu,percent:%hhu,voltage:%hu",info.state,info.percent,info.voltage);
         VTMBPRunStatus status = bpData.run_status;
         VTMBPRealTimeWaveform waveform = bpData.rt_wav;
         switch (status.status) {
@@ -232,7 +232,7 @@ bool hasListeners;
     }else if(cmdType == VTMBLECmdSyncTime){
         NSLog(@"Synchronize time successfully");
         
-    }else if(cmdType == VTMBLECmdGetFileList){//
+    }else if(cmdType == VTMBLECmdGetFileList){
         VTMFileList list = [VTMBLEParser parseFileList:response];
         NSMutableArray *downloadArr = [NSMutableArray array];
         NSMutableString *fileStr = [NSMutableString string];

@@ -1,11 +1,3 @@
-//
-//  VTBLEUtils.m
-//  VTMProductSDK
-//
-//  Created by viatom on 2020/6/23.
-//  Copyright © 2020 viatom. All rights reserved.
-//
-
 #import "VTBLEUtils.h"
 
 @interface VTBLEUtils ()
@@ -81,7 +73,6 @@ static VTBLEUtils *_utils = nil;
         _device = device;
         _selectedPeripheral = device.rawPeripheral;
         [_centralManager connectPeripheral:_selectedPeripheral options:@{CBConnectPeripheralOptionNotifyOnDisconnectionKey: [NSNumber numberWithBool:YES]}];
-//        [self performSelector:@selector(timeOut) withObject:self afterDelay:5.0f];
     }
 }
 
