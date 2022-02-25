@@ -7,6 +7,7 @@ import {
   NativeModules,
   NativeEventEmitter,
   Button,
+  Platform,
 } from 'react-native';
 import ArmfitSdkManager from 'react-native-armfit-sdk';
 
@@ -70,24 +71,47 @@ export default function App() {
 
   const doScan = () => {
     setScanning(true);
-    ArmfitSdkManager.scan({})
+    ArmfitSdkManager.scan({}, Platform.OS)
       .then((results) => {
-        console.log(results);
+        // console.log(results);
+        console.log('Scan ArmFit', results);
       })
       .catch((err) => {
         console.error(err);
       });
   };
 
+  // const handleDiscoverPeripheral = (peripheral: any) => {
+  //   setScanning(false);
+  //   if (!peripheral.name) {
+  //     peripheral.name = 'NO NAME';
+  //   } else if (peripheral.name === 'BP2 1415') {
+  //     console.log('Got ArmFit', peripheral);
+  //     setResult(peripheral);
+  //     ArmfitSdkManager.stopScan();
+  //   }
+  // };
+
   const handleDiscoverPeripheral = (peripheral: any) => {
+    console.log('Got ble peripheral', peripheral, peripheral.name);
     setScanning(false);
     if (!peripheral.name) {
       peripheral.name = 'NO NAME';
-    } else if (peripheral.name === 'BP2 1415') {
-      console.log('Got ArmFit', peripheral);
-      setResult(peripheral);
-      ArmfitSdkManager.stopScan();
     }
+    // else if (peripheral.name === 'BP2 1405') {
+    //   console.log('Got ArmFit', peripheral);
+    //   setResult(peripheral);
+    //   ArmfitSdkManager.stopScan();
+    // }
+    // else {
+    //   console.log('Got ArmFit', peripheral);
+    //   setResult(peripheral);
+    //   ArmfitSdkManager.stopScan();
+    // }
+
+    console.log('Got ArmFit', peripheral);
+    setResult(peripheral);
+    ArmfitSdkManager.stopScan();
   };
 
   const handleDevicestate = (value: any) => {
@@ -125,6 +149,7 @@ export default function App() {
       {!scanning && result.id && (
         <Button onPress={() => doScan()} title="Scan Again" color="#811584" />
       )}
+      {/* <Text>Result: {JSON.stringify(result)}</Text> */}
       <Text>ID: {JSON.stringify(result.id)}</Text>
       <Text>RSSI: {JSON.stringify(result.rssi)}</Text>
       <Text>Result: {JSON.stringify(result.name)}</Text>
@@ -152,7 +177,7 @@ export default function App() {
               .then(() => {
                 // Success code
                 setConnected(true);
-                console.log('Connected');
+                console.log('Armfit Connected', result.id);
               })
               .catch((error) => {
                 // Failure code

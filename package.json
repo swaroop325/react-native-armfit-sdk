@@ -143,5 +143,8 @@
         }
       ]
     ]
+  },
+  "dependencies": {
+    "react-native-armfit-sdk": "^1.0.0"
   }
 }

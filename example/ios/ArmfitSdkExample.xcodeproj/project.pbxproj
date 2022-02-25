@@ -17,6 +17,8 @@
 		2DCD954D1E0B4F2C00145EB5 /* ArmfitSdkExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ArmfitSdkExampleTests.m */; };
 		4C39C56BAD484C67AA576FFA /* libPods-ArmfitSdkExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA3E69C5B9553B26FBA2DF04 /* libPods-ArmfitSdkExample.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		B06D449727BFEA6900007E9F /* VTMProductLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B06D449627BFEA6900007E9F /* VTMProductLib.framework */; };
+		B06D449827BFEA6900007E9F /* VTMProductLib.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B06D449627BFEA6900007E9F /* VTMProductLib.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +38,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		B06D445227BFC8BB00007E9F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B06D449827BFEA6900007E9F /* VTMProductLib.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00E356EE1AD99517003FC87E /* ArmfitSdkExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArmfitSdkExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -51,10 +67,11 @@
 		2D02E4901E0B4A5D006451C7 /* ArmfitSdkExample-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ArmfitSdkExample-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		47F7ED3B7971BE374F7B8635 /* Pods-ArmfitSdkExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArmfitSdkExample.debug.xcconfig"; path = "Target Support Files/Pods-ArmfitSdkExample/Pods-ArmfitSdkExample.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ArmfitSdkExample/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B06D444E27BFB4D100007E9F /* ArmfitSdkExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ArmfitSdkExample.entitlements; path = ArmfitSdkExample/ArmfitSdkExample.entitlements; sourceTree = "<group>"; };
+		B06D449627BFEA6900007E9F /* VTMProductLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VTMProductLib.framework; path = ../../ios/VTMProductLib.framework; sourceTree = "<group>"; };
 		CA3E69C5B9553B26FBA2DF04 /* libPods-ArmfitSdkExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ArmfitSdkExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E00ACF0FDA8BF921659E2F9A /* Pods-ArmfitSdkExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArmfitSdkExample.release.xcconfig"; path = "Target Support Files/Pods-ArmfitSdkExample/Pods-ArmfitSdkExample.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B06D449727BFEA6900007E9F /* VTMProductLib.framework in Frameworks */,
 				4C39C56BAD484C67AA576FFA /* libPods-ArmfitSdkExample.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -110,6 +128,7 @@
 		13B07FAE1A68108700A75B9A /* ArmfitSdkExample */ = {
 			isa = PBXGroup;
 			children = (
+				B06D444E27BFB4D100007E9F /* ArmfitSdkExample.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -124,8 +143,8 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B06D449627BFEA6900007E9F /* VTMProductLib.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				CA3E69C5B9553B26FBA2DF04 /* libPods-ArmfitSdkExample.a */,
 			);
 			name = Frameworks;
@@ -137,7 +156,6 @@
 				47F7ED3B7971BE374F7B8635 /* Pods-ArmfitSdkExample.debug.xcconfig */,
 				E00ACF0FDA8BF921659E2F9A /* Pods-ArmfitSdkExample.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -207,6 +225,7 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				C1D60D28B925C94BD88E79D7 /* [CP] Copy Pods Resources */,
 				F07EE820C09D400568C10384 /* [CP] Embed Pods Frameworks */,
+				B06D445227BFC8BB00007E9F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -267,6 +286,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = 6X864FH4RD;
 						LastSwiftMigration = 1120;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -560,8 +580,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = ArmfitSdkExample/ArmfitSdkExample.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6X864FH4RD;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ArmfitSdkExample/LIB/VTMProductSDK",
+					"$(PROJECT_DIR)/ArmfitSdkExample/Framework",
+				);
 				INFOPLIST_FILE = ArmfitSdkExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -583,7 +610,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = ArmfitSdkExample/ArmfitSdkExample.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6X864FH4RD;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ArmfitSdkExample/LIB/VTMProductSDK",
+					"$(PROJECT_DIR)/ArmfitSdkExample/Framework",
+				);
 				INFOPLIST_FILE = ArmfitSdkExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
