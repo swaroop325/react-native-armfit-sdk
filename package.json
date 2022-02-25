@@ -1,6 +1,6 @@
 {
   "name": "react-native-armfit-sdk",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Connect and retrieve data from Viatom BLE devices",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -32,6 +32,10 @@
     "bootstrap": "yarn example && yarn && yarn pods"
   },
   "keywords": [
+    "armfit",
+    "careplix",
+    "BLE",
+    "Armfit-SDK",
     "react-native",
     "ios",
     "android"
